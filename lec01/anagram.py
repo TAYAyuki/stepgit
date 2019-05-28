@@ -30,27 +30,31 @@ def match(*target,**d):
 if __name__ == "__main__":
     ans = ''
     t = []
+    cou = 0
     target = input()
     starget = list(target)
-    #starget = list(sorted(target))
     with open('dictionary.sort.json', 'r') as f5:
         dic = json.load(f5)
+        '''
         l = list(itertools.product(range(2),repeat=len(starget)))
         l.sort(reverse=True)
         print(starget)
-        for i in range(len(l)):
-            if i == (len(l)-1):
-                print('None')
-                exit()
-            for j in range(len(starget)):
-                if l[i][j] == 1:
-                    t.append(starget[j])
-            t = sorted(t)
-            ans = match(*t,**dic)
-            t = []
-            if ans != None:
-                print(ans)
-                exit()
+        '''
+        for k in range(len(starget),5,-1):
+            l = list(itertools.combinations(starget,k))
+            for j in l:
+                j = sorted(j)
+                ans = match(*j,**dic)
+                if ans != None:
+                    for e in ans:
+                        if e in ['j','k','x','z','q']:
+                            cou += 3
+                        elif e in ['c','f','h','l','m','p','v','w','y']:
+                            cou += 2
+                        else:
+                            cou += 1
+                    print(ans+str(cou))
+                    cou = 0
     
     
     
