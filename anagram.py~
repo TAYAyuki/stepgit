@@ -1,0 +1,37 @@
+'''
+#dictionary.wordsファイルの小文字処理
+with open('dictionary.words.txt','r') as f:
+    with open('dictionary.lower.txt', 'w') as f2:
+        for line in f:
+            s = line.lower()
+            f2.write(s)
+'''
+'''
+#{英単語:sortした英単語のリスト}
+import json
+with open('dictionary.lower.txt', "r") as f3:
+    with open('dictionary.sort.json', "w") as f4:
+        dic = {}
+        lines = f3.readlines()
+        for line in lines:
+            line = line.strip() #ln del
+            dic[line] = sorted(line)
+        json.dump(dic,f4)
+'''
+import json
+def match(*target,**d):  
+    for k,v in d.items():
+        if list(target) == v:
+            return k
+    
+if __name__ == "__main__":
+    ans = ''
+    target = input()
+    starget = sorted(target)
+    with open('dictionary.sort.json', 'r') as f5:
+        dic = json.load(f5)
+        ans = match(*starget,**dic)
+        print(ans)
+    
+    
+    
