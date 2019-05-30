@@ -18,6 +18,17 @@ with open('dictionary.lower.txt', "r") as f3:
             dic[line] = sorted(line)
         json.dump(dic,f4)
 '''
+'''
+#sortした英単語のリスト全部をsort
+import json
+with open('dictionary.sort.json', "r") as f:
+    with open('dictionary.sortall.json', "w") as f2:
+        dic = json.load(f)
+        dic_sorted = sorted(dic.items(), key=lambda x:x[1])
+        json.dump(dic_sorted,f2)
+        
+'''
+            
 import json
 import itertools
 
@@ -32,29 +43,35 @@ if __name__ == "__main__":
     t = []
     cou = 0
     target = input()
-    starget = list(target)
-    with open('dictionary.sort.json', 'r') as f5:
+    starget = list(sorted(target))
+    holdtarget = list(sorted(target))
+    with open('dictionary.sortall.json', 'r') as f5:
         dic = json.load(f5)
-        '''
-        l = list(itertools.product(range(2),repeat=len(starget)))
-        l.sort(reverse=True)
-        print(starget)
-        '''
-        for k in range(len(starget),5,-1):
-            l = list(itertools.combinations(starget,k))
-            for j in l:
-                j = sorted(j)
-                ans = match(*j,**dic)
-                if ans != None:
-                    for e in ans:
-                        if e in ['j','k','x','z','q']:
-                            cou += 3
-                        elif e in ['c','f','h','l','m','p','v','w','y']:
-                            cou += 2
-                        else:
-                            cou += 1
+        for i in range(len(dic)):
+            for j in range(len(dic[i][1])):
+                if dic[i][1][j] in starget:
+                    starget.remove(dic[i][1][j])
+                     #print(dic[i][1])
+                    if j == len(dic[i][1])-1:
+                        ans = dic[i][0]
+                        #print(ans)
+                     
+                else:
+                    starget = list(sorted(target))
+                    break
+                    
+            if ans != None:
+                for e in ans:
+                    if e in ['j','k','x','z','q']:
+                        cou += 3
+                    elif e in ['c','f','h','l','m','p','v','w','y']:
+                        cou += 2
+                    else:
+                        cou += 1
+                if cou >= 8:
                     print(ans+str(cou))
-                    cou = 0
-    
-    
+                cou = 0
+                ans = None
+                starget = holdtarget
+     
     
