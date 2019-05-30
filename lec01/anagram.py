@@ -30,48 +30,62 @@ with open('dictionary.sort.json', "r") as f:
 '''
             
 import json
-import itertools
+from bs4 import BeautifulSoup
+import urllib.request as req
+import re
 
-def match(*target,**d):
-    target = list(target)
-    for k,v in d.items():
-        if target == v:
-            return k   
-            
+url = "https://icanhazwordz.appspot.com"
+res = req.urlopen(url)
+html = res.read().decode('utf-8')
+soup = BeautifulSoup(html, 'lxml')
+div = soup.find_all("div")
+moji = ''
+for tag in div:
+    try:
+        string_ = tag.get("class").pop(0)
+        if string_ in "letter":
+             moji += tag.string
+    except:
+        pass
+moji = moji.lower()
+print(moji)
+
 if __name__ == "__main__":
-    ans = ''
+    answer = ''
+    real_answer = ''
     t = []
-    cou = 0
+    counter = 0
+    maximum = 0
     target = input()
-    starget = list(sorted(target))
+    #target = moji
+    
+    sorted_target = list(sorted(target))
     holdtarget = list(sorted(target))
     with open('dictionary.sortall.json', 'r') as f5:
         dic = json.load(f5)
         for i in range(len(dic)):
             for j in range(len(dic[i][1])):
-                if dic[i][1][j] in starget:
-                    starget.remove(dic[i][1][j])
-                     #print(dic[i][1])
+                if dic[i][1][j] in sorted_target:
+                    sorted_target.remove(dic[i][1][j])
                     if j == len(dic[i][1])-1:
-                        ans = dic[i][0]
-                        #print(ans)
-                     
+                        answer = dic[i][0]
                 else:
-                    starget = list(sorted(target))
+                    sorted_target = list(sorted(target))
                     break
                     
-            if ans != None:
-                for e in ans:
+            if answer != None:
+                for e in answer:
                     if e in ['j','k','x','z','q']:
-                        cou += 3
+                        counter += 3
                     elif e in ['c','f','h','l','m','p','v','w','y']:
-                        cou += 2
+                        counter += 2
                     else:
-                        cou += 1
-                if cou >= 8:
-                    print(ans+str(cou))
-                cou = 0
-                ans = None
-                starget = holdtarget
-     
+                        counter += 1
+                if counter >= maximum:
+                    real_answer = answer
+                    maximum = counter
+                counter = 0
+                answer = None
+                sorted_target = holdtarget
+        print(real_answer)
     
