@@ -81,11 +81,13 @@ for i in range(10):
                     else:
                         sorted_target = list(sorted(target))
                         break
-                if answer != None:                  
-                    if 'u' in answer and 'q' in answer:
-                        if sorted_target.count('u') ==  1 and list(answer).count('u') == 1:
-                            answer = ''
-                    if 'u' in answer and 'q' not in answer:
+                if answer != None:
+                    if sorted_target.count('u')-sorted_target.count('q') < answer.count('q')-answer.count('u'):
+                        answer= ''
+                    #if 'u' in answer and 'q' in answer:
+                     #   if sorted_target.count('u') ==  1 and answer.count('u') == 1:
+                      #      answer = ''
+                    if 'u' in answer and 'q' not in answer and 'q' in sorted_target:
                         if (answer.count('u')-answer.count('q')) > (target.count('u')-target.count('q')):
                             answer = ''
                     if 'q' in answer:
@@ -112,4 +114,4 @@ for i in range(10):
             print(real_answer)
             driver.find_element_by_name('move').send_keys(real_answer)
             #driver.find_element_by_value('Submit').click()
-            sleep(2)
+            sleep(0.5)
