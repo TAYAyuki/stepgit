@@ -33,12 +33,16 @@ import json
 from bs4 import BeautifulSoup
 import urllib.request as req
 import re
+from selenium import webdriver
 
 url = "https://icanhazwordz.appspot.com"
 res = req.urlopen(url)
 html = res.read().decode('utf-8')
 soup = BeautifulSoup(html, 'lxml')
 div = soup.find_all("div")
+driver = webdriver.Chrome()
+driver.get(url)
+
 moji = ''
 for tag in div:
     try:
@@ -56,8 +60,8 @@ if __name__ == "__main__":
     t = []
     counter = 0
     maximum = 0
-    target = input()
-    #target = moji
+    #target = input()
+    target = moji
     
     sorted_target = list(sorted(target))
     holdtarget = list(sorted(target))
@@ -88,4 +92,5 @@ if __name__ == "__main__":
                 answer = None
                 sorted_target = holdtarget
         print(real_answer)
-    
+        driver.find_element_by_name('move').send_keys(real_answer)
+        driver.find_element_by_type('Submit').click()
