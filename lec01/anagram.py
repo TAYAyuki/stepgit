@@ -35,13 +35,15 @@ import urllib.request as req
 import re
 from selenium import webdriver
 
+driver = webdriver.Chrome()
 url = "https://icanhazwordz.appspot.com"
+driver.get(url)
+#res = driver.get(url)
 res = req.urlopen(url)
 html = res.read().decode('utf-8')
 soup = BeautifulSoup(html, 'lxml')
 div = soup.find_all("div")
-driver = webdriver.Chrome()
-driver.get(url)
+
 
 moji = ''
 for tag in div:
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     maximum = 0
     #target = input()
     target = moji
-    
+
     sorted_target = list(sorted(target))
     holdtarget = list(sorted(target))
     with open('dictionary.sortall.json', 'r') as f5:
@@ -81,6 +83,8 @@ if __name__ == "__main__":
                 for e in answer:
                     if e in ['j','k','x','z','q']:
                         counter += 3
+                        if e == 'q':
+                            counter -= 1
                     elif e in ['c','f','h','l','m','p','v','w','y']:
                         counter += 2
                     else:
