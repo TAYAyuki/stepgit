@@ -30,7 +30,6 @@ with open('dictionary.sort.json', "r") as f:
 '''
             
 import json
-#from time import sleep
 from bs4 import BeautifulSoup
 import urllib.request as req
 import re
@@ -39,9 +38,6 @@ from selenium import webdriver
 driver = webdriver.Chrome()
 url = "https://icanhazwordz.appspot.com"
 driver.get(url)
-#res = driver.get(url)
-#res = req.urlopen(url)
-#html = res.read().decode('utf-8')
 html_original = driver.page_source
 soup = BeautifulSoup(html_original, 'lxml')
 div = soup.find_all("div")
@@ -59,7 +55,6 @@ for i in range(10):
         except:
             pass
     moji = moji.lower()
-    #print(moji)
 
     if __name__ == "__main__":
         answer = ''
@@ -82,11 +77,8 @@ for i in range(10):
                         sorted_target = list(sorted(target))
                         break
                 if answer != None:
-                    if sorted_target.count('u')-sorted_target.count('q') < answer.count('u')-answer.count('q'):
-                        answer= ''
-                    #if 'u' in answer and 'q' in answer:
-                     #   if sorted_target.count('u') ==  1 and answer.count('u') == 1:
-                      #      answer = ''
+                    #if sorted_target.count('u')-sorted_target.count('q') < answer.count('u')-answer.count('q'):
+                    #    answer= ''
                     if 'u' in answer and 'q' not in answer and 'q' in sorted_target:
                         if (answer.count('u')-answer.count('q')) > (target.count('u')-target.count('q')):
                             answer = ''
@@ -113,4 +105,6 @@ for i in range(10):
                     sorted_target = holdtarget
             print(real_answer)
             driver.find_element_by_name('move').send_keys(real_answer)
+            if real_answer == '':
+                driver.find_element_by_xpath("//input[@name='pass']").click()
             driver.find_element_by_xpath("//input[@type='submit']").click()
