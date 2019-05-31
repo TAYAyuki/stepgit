@@ -81,13 +81,12 @@ for i in range(10):
                     else:
                         sorted_target = list(sorted(target))
                         break
-                if answer != None:
-                    
+                if answer != None:                  
                     if 'u' in answer and 'q' in answer:
                         if sorted_target.count('u') ==  1 and list(answer).count('u') == 1:
                             answer = ''
                     if 'u' in answer and 'q' not in answer:
-                        if (answer.count('u')-answer.count('q')) > (target.count('u')-target.count('p')):
+                        if (answer.count('u')-answer.count('q')) > (target.count('u')-target.count('q')):
                             answer = ''
                     if 'q' in answer:
                         index = answer.index('q')
