@@ -71,7 +71,6 @@ def evaluate(tokens):
         tokens.insert(index-2, {'type': 'NUMBER', 'number': division_answer})
         index -= 2
     index += 1
-  #print(tokens)
   index = 1
   while index < len(tokens):
     if tokens[index]['type'] == 'NUMBER':
