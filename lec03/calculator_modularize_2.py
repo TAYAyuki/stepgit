@@ -51,13 +51,9 @@ def tokenize(line):
     tokens.append(token)
   return tokens
 
-
-def evaluate(tokens):
-  answer = 0
+def evaluate_times_division(index, tokens):
   times_answer = 0
   division_answer = 0
-  tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
-  index = 1
   while index < len(tokens):
     if tokens[index]['type'] == 'NUMBER':
       if tokens[index - 1]['type'] == 'TIMES':
@@ -71,7 +67,10 @@ def evaluate(tokens):
         tokens.insert(index-2, {'type': 'NUMBER', 'number': division_answer})
         index -= 2
     index += 1
-  index = 1
+  return tokens
+
+def evaluate_plus_minus(index, tokens):
+  answer = 0
   while index < len(tokens):
     if tokens[index]['type'] == 'NUMBER':
       if tokens[index - 1]['type'] == 'PLUS':
@@ -82,6 +81,14 @@ def evaluate(tokens):
         print('Invalid syntax')
         exit(1)
     index += 1
+  return answer 
+
+def evaluate(tokens):
+  tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
+  index = 1
+  tokens = evaluate_times_division(index, tokens)
+  index = 1
+  answer = evaluate_plus_minus(index, tokens)
   return answer
 
 
