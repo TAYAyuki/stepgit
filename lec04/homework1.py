@@ -1,4 +1,5 @@
 '''
+任意の人の名前　から　任意の人の名前 までのstep数を表示
 ##########################関数の概要################################
 Input()
 from_name に探し始めるニックネームを入力
@@ -116,7 +117,7 @@ if __name__ == '__main__':
     from_name_id , to_name_id = Name_ID_change(from_name, to_name, nicknames_list)
     links_list = Links_list_create()
     search_count = Search(from_name_id, to_name_id, links_list)
-    print(search_count)
+    print(from_name+' から '+to_name+' までのステップ数は '+str(search_count)+' です!')
   
     #########テスト##########
     print('test1:'+str(test(0,1,[[0,1]]))+'  excepted_answer:1')
